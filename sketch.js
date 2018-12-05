@@ -5,6 +5,8 @@ var myImage2;
 var myImage3;
 var myImage4;
 
+var mySnow = [];
+
 function preload(){
   myImage = loadImage('./assets/cake.png');
   myImage1 = loadImage('./assets/cand1.png');
@@ -17,6 +19,11 @@ function setup() {
 
   mic = new p5.AudioIn();
   mic.start();
+
+  for (var i=0; i<300; i++){
+  var b = new Snow(random(width), random(height), random(2, 10));
+  mySnow.speed = random(1,10);
+  mySnow.push(b);}
 }
 
 function draw() {
@@ -65,4 +72,28 @@ function draw() {
   line(myImage.width-30, myImage.height-83, myImage.width-30, myImage.height-40);
   line(myImage.width-110, myImage.height-97, myImage.width-110, myImage.height-60);
   pop()
+
+  for(var i=0; i<mySnow.length; i++){
+    mySnow[i].move();
+    mySnow[i].display();
+  }
+}
+
+function Snow(_x, _y, _diameter) {
+  this.size = _diameter;
+  this.x = _x;
+  this.y = _y;
+
+  this.color = 'orangered';
+  this.speed = 2;
+
+  this.move = function() {
+     this.y += this.speed;
+  }
+
+  this.display = function() {
+    fill(this.color);
+    ellipse(this.x, this.y, this.size);
+    noStroke();
+  }
 }
